@@ -60,14 +60,14 @@
                             {{-- {{Form::text('name', null,['class' => 'form-control'])}} --}}
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="status" value="publish"
-                                    id="flexRadioDefault1">
+                                    id="flexRadioDefault1" @if($data->status == 'publish') checked @endif>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Publish
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="status" value="unpublish"
-                                    id="flexRadioDefault2" checked>
+                                    id="flexRadioDefault2" @if($data->status == 'unpublish') checked @endif>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Unpublish
                                 </label>

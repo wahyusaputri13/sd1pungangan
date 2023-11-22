@@ -45,7 +45,7 @@ class FlipbookController extends Controller
         $departments = Kategori::all();
         $select = [];
         foreach ($departments as $department) {
-            $select[$department->kategori_kelas] = $department->kategori_kelas . $department->nama_guru . $department->judul;
+            $select[$department->id] = $department->kategori_kelas . $department->nama_guru . $department->judul;
         }
         return view('back.a.pages.upload.create', compact('select'));
     }
@@ -60,12 +60,12 @@ class FlipbookController extends Controller
     {
         if ($request->hasFile('photo')) {
             $validated = $request->validate([
-                'photo' => 'image|max:12048',
+                'photo' => 'required|mimes:pdf',
                 'name' => 'required',
             ]);
-            $name = $request->file('photo')->getClientOriginalName();
-            $path = $request->file('photo')->store('upload');
-            $slug = $request->title;
+            // $name = $request->file('photo')->getClientOriginalName();
+            // $path = $request->file('photo')->store('upload');
+            // $slug = $request->title;
             $fileName = time() . '.' . $request->file->extension();
 
             $data = [
@@ -82,7 +82,7 @@ class FlipbookController extends Controller
                 'path_pdf' => 'required|mimes:pdf|max:2048',
             ]);
             $fileName = time() . '.' . $request->path_pdf->extension();
-            $request->path_pdf->storeAs(('uploads'), $fileName);
+            $request->path_pdf->storeAs(('public/uploads'), $fileName);
             $slug = $request->title;
             $data = [
                 'name' => $request->name,
@@ -120,7 +120,7 @@ class FlipbookController extends Controller
         $select = [];
         $data = Upload::find($id);
         foreach ($departments as $department) {
-            $select[$department->kategori_kelas] = $department->kategori_kelas . $department->nama_guru . $department->judul;
+            $select[$department->id] = $department->kategori_kelas . $department->nama_guru . $department->judul;
         }
         return view('back.a.pages.upload.edit', compact('data', 'select'));
     }
@@ -139,11 +139,11 @@ class FlipbookController extends Controller
                 'name' => 'required',
             ]);
             $fileName = time() . '.' . $request->path_pdf->extension();
-            $request->path_pdf->storeAs(('uploads'), $fileName);
+            $request->path_pdf->storeAs(('public/uploads'), $fileName);
 
             $upload = Upload::where('id', $id)->first();
-            if (Storage::exists('uploads/' . $upload->path_pdf)) {
-                Storage::delete('uploads/' . $upload->path_pdf);
+            if (Storage::exists('public/uploads/' . $upload->path_pdf)) {
+                Storage::delete('public/uploads/' . $upload->path_pdf);
                 // unlink($upload->path_pdf);
             }
 
@@ -182,12 +182,12 @@ class FlipbookController extends Controller
     public function destroy($id)
     {
         $upload = Upload::where('id', $id)->first();
-        if (Storage::exists('uploads/' . $upload->path_pdf)) {
-            Storage::delete('uploads/' . $upload->path_pdf);
+        if (Storage::exists('public/uploads/' . $upload->path_pdf)) {
+            Storage::delete('public/uploads/' . $upload->path_pdf);
             // unlink($upload->path_pdf);
         }
         $data = Upload::find($id);
-        // $file_path = public_path().'/public/uploads/'.$data->path_pdf;
+        // $file_path = public_path().'/public/public/uploads/'.$data->path_pdf;
         return $data->delete();
     }
 
@@ -195,7 +195,7 @@ class FlipbookController extends Controller
     {
         if ($request->has('q')) {
             $cari = $request->q;
-            $data = DB::table('uploads')->select('id', 'menu_name')->where('menu_name', 'LIKE', '%' . $cari . '%')->get();
+            $data = DB::table('public/uploads')->select('id', 'menu_name')->where('menu_name', 'LIKE', '%' . $cari . '%')->get();
         } else {
             $data = Upload::orderBy('id', 'ASC')->limit(10)->get();
         }

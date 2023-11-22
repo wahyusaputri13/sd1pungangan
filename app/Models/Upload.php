@@ -9,11 +9,9 @@ class Upload extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    // use HasFactory;
-    // protected $fillable = [
-    //     'id_kategori',
-    //     'name',
-    //     'path_pdf',
-    //     'status',
-    // ];
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori', 'id');
+    }
 }

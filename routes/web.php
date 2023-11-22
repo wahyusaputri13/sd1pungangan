@@ -19,6 +19,7 @@ use App\Http\Controllers\RelatedLinkController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DailyReportController;
+use App\Http\Controllers\ElearningController;
 use App\Http\Controllers\FlipbookController;
 use App\Http\Controllers\KategoriController;
 use App\Models\Counter;
@@ -40,6 +41,7 @@ use Illuminate\Support\Facades\File;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('template', function () {
     return File::get(public_path() . '/doc.html');
 });
@@ -80,6 +82,35 @@ Route::get('/', function () {
     }
 })->name('root')->middleware('data_web');
 
+Route::get('/page', function () {
+    $themes = Website::all()->first();
+    if (Website::all()->count() != 0) {
+        $geoipInfo = geoip()->getLocation($_SERVER['REMOTE_ADDR']);
+        $data = [
+            'ip' => $geoipInfo->ip,
+            'iso_code' => $geoipInfo->iso_code,
+            'country' => $geoipInfo->country,
+            'city' => $geoipInfo->city,
+            'state' => $geoipInfo->state,
+            'state_name' => $geoipInfo->state_name,
+            'postal_code' => $geoipInfo->postal_code,
+            'lat' => $geoipInfo->lat,
+            'lon' => $geoipInfo->lon,
+            'timezone' => $geoipInfo->timezone,
+            'continent' => $geoipInfo->continent,
+            'currency' => $geoipInfo->currency,
+        ];
+        Seo::seO();
+        Counter::create($data);
+        $gallery = Gallery::orderBy('created_at', 'desc')->paginate(12);
+        $news = News::orderBy('date', 'desc')->paginate(9);
+        return view('front.' . $themes->themes_front . '.pages.index', compact('gallery', 'news'));
+    } else {
+        $data = Themes::all();
+        return view('front.setup', compact('data'));
+    }
+})->name('root')->middleware('data_web');
+
 Route::group(['middleware' => 'data_web'], function () {
     Route::get('/news-detail/{slug}', [FrontController::class, 'newsdetail'])->name('news.detail');
     Route::get('/news-author/{id}', [FrontController::class, 'newsbyauthor'])->name('news.author');
@@ -91,6 +122,9 @@ Route::group(['middleware' => 'data_web'], function () {
     Route::get('/latar-belakang', [FrontController::class, 'latarbelakang'])->name('latar-belakang');
     Route::get('/tujuan', [FrontController::class, 'tujuan'])->name('tujuan');
     Route::get('/kampung-pancasila', [FrontController::class, 'kampungpancasila'])->name('kampung-pancasila');
+    Route::get('/page/elearning', [ElearningController::class, 'index'])->name('elearning');
+    Route::get('/page/elearning/{id}', [ElearningController::class, 'daftarbook'])->name('elearning.book');
+    Route::get('/page/detailelearning/{id}', [ElearningController::class, 'detailbook'])->name('detailelearning.book');
     Route::get('/page/{id}', [FrontController::class, 'page'])->name('page');
     Route::get('/component/{id}', [FrontController::class, 'component'])->name('component');
     Route::get('/load-sql', [FrontController::class, 'loadsql']);

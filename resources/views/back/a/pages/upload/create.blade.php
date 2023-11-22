@@ -22,7 +22,8 @@
                                     <span class="btn btn-success btn-round btn-file">
                                         <span class="fileinput-new">Select Document</span>
                                         <span class="fileinput-exists">Change</span>
-                                        {{ Form::file('path_pdf', null, ['class' => 'form-control']) }}
+                                        <input type="file" name="path_pdf" class="form-controll"
+                                            accept="application/pdf">
                                     </span>
                                     <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
                                         data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
@@ -89,9 +90,9 @@
     </script>
     <!-- ck editor -->
     <!-- <script src="{{ asset('assets/back/assets/ckeditor/ckeditor.js') }}"></script>
-                                                                        <script>
-                                                                            CKEDITOR.replace('my-editor');
-                                                                        </script> -->
+                                                                                    <script>
+                                                                                        CKEDITOR.replace('my-editor');
+                                                                                    </script> -->
     <!-- end ck editor -->
     <!-- tiny mce editor -->
     <!-- <script src="{{ asset('assets/back/assets/tinymce/js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script> -->
