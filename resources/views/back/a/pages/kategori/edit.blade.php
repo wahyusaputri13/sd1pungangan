@@ -14,7 +14,8 @@
                             {{ Form::model($data, ['route' => ['kategori.update', $data->id], 'method' => 'put', 'files' => 'true', '']) }}
                             <div class="form-group label-floating mb-2">
                                 <label class="control-label">Kategori</label>
-                                {!! Form::select('kategori_kelas', $select, null, ['class' => 'form-control', 'id' => 'title']) !!}
+                                {{-- {!! Form::select('kategori_kelas', $select, null, ['class' => 'form-control', 'id' => 'title']) !!} --}}
+                                {{ Form::text('kategori_kelas', $data->kategori_kelas, ['class' => 'form-control']) }}
                             </div>
                             <div class="d-flex text-right">
                                 <a href="{{ route('kategori.index') }}" class="btn btn-default btn-fill">Cancel</a>

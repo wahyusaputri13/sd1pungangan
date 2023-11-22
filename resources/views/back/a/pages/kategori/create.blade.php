@@ -27,8 +27,7 @@
                             </div> --}}
                             <div class="form-group label-floating mb-2">
                                 <label class="control-label">Kategori</label>
-                                {!! Form::select('kategori_kelas', $select, null, ['class' => 'form-control']) !!}
-                                {{-- {{ Form::text('kategori_kelas', null, ['class' => 'form-control']) }} --}}
+                                {{ Form::text('kategori_kelas', null, ['class' => 'form-control']) }}
                             </div>
                             <div class="d-flex text-right">
                                 <a href="{{ route('kategori.index') }}" class="btn btn-default btn-fill">Cancel</a>

@@ -49,10 +49,9 @@ class KategoriController extends Controller
     {
         $departments = DB::table('kelas')->get();
         $select = [];
-        foreach($departments as $department){
-            $select[$department->kelas] = 'Kelas '.$department->kelas;
+        foreach ($departments as $department) {
+            $select[$department->kelas] = 'Kelas ' . $department->kelas;
         }
-        // return view('back.a.pages.upload.create', compact('select'));
         $root = Kategori::pluck('kategori_kelas', 'id');
         return view('back.a.pages.kategori.create', compact('select'));
     }
@@ -65,13 +64,13 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate(
-        //     [
-        //         'kelas' => 'required',
-        //     ],
-        // );
+        $validated = $request->validate(
+            [
+                'kategori_kelas' => 'required',
+            ],
+        );
         Kategori::create($request->except('_token') + [
-            'menu_url' => Str::slug($request->kategori_kelas)
+            'kategori_kelas' => $request->kategori_kelas
         ]);
         return redirect(route('kategori.index'))->with(['success' => 'Data added successfully!']);
     }
@@ -96,13 +95,7 @@ class KategoriController extends Controller
     public function edit($id)
     {
         $data = Kategori::find($id);
-        // $root = Kategori::pluck('kategori_kelas', 'id');
-        $departments = DB::table('kelas')->get();
-        $select = [];
-        foreach($departments as $department){
-            $select[$department->kelas] = 'Kelas '.$department->kelas;
-        }
-        return view('back.a.pages.kategori.edit', compact('data', 'select'));
+        return view('back.a.pages.kategori.edit', compact('data'));
     }
 
     /**
@@ -114,6 +107,11 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validated = $request->validate(
+            [
+                'kategori_kelas' => 'required',
+            ],
+        );
         Kategori::find($id)->update(
             $request->except(['_token']),
         );
