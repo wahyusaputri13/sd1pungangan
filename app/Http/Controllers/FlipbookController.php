@@ -79,7 +79,7 @@ class FlipbookController extends Controller
         } else {
             $validated = $request->validate([
                 'name' => 'required',
-                'path_pdf' => 'required|mimes:pdf,xlx,csv|max:2048',
+                'path_pdf' => 'required|mimes:pdf|max:2048',
             ]);
             $fileName = time() . '.' . $request->path_pdf->extension();
             $request->path_pdf->storeAs(('uploads'), $fileName);

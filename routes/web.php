@@ -28,6 +28,7 @@ use App\Models\Gallery;
 use App\Models\Website;
 use App\Models\Themes;
 use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,9 @@ use PhpParser\Node\Stmt\Return_;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('template', function () {
+    return File::get(public_path() . '/doc.html');
+});
 
 Route::group(
     ['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']],

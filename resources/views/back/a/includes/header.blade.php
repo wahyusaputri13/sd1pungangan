@@ -69,20 +69,21 @@
                         <p>Inbox</p>
                     </a>
                 </li>
+                <li class="{{ Str::contains(Request::url(), 'upload') ? 'active' : '' }}">
+                    <a href="{{ route('upload.index') }}">
+                        <i class="material-icons">apps</i>
+                        <p>FlipBook</p>
+                    </a>
+                </li>
 
                 <li class="{{ Str::contains(Request::url(), 'kategori') ? 'active' : '' }}">
                     <a href="{{ route('kategori.index') }}">
-                        <i class="material-icons">chevron_right</i>
+                        <i class="material-icons">widgets</i>
                         <p>Kategori Kelas</p>
                     </a>
                 </li>
 
-                <li class="{{ Str::contains(Request::url(), 'upload') ? 'active' : '' }}">
-                    <a href="{{ route('upload.index') }}">
-                        <i class="material-icons">add_to_photos_outlined</i>
-                        <p>FlipBook</p>
-                    </a>
-                </li>
+
 
                 <li class="{{ Str::contains(Request::url(), ['gallery', 'news']) ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#pagesExamples"
