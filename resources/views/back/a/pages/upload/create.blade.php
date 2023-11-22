@@ -40,10 +40,12 @@
                         </div>
                         <div class="form-group label-floating mb-2">
                             <label class="control-label">Kategori Kelas</label>
-                            {!! Form::select('id_kategori', $select, null, ['class'=>'form-control']) !!}
+                            {!! Form::select('id_kategori', $select, null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Nama</label>
+                            <label class="control-label">
+                                <h4>Nama Guru</h4>
+                            </label>
                             {{ Form::text('name', null, ['class' => 'form-control']) }}
                         </div>
                         <div class="form-group">
@@ -87,9 +89,9 @@
     </script>
     <!-- ck editor -->
     <!-- <script src="{{ asset('assets/back/assets/ckeditor/ckeditor.js') }}"></script>
-                                                        <script>
-                                                            CKEDITOR.replace('my-editor');
-                                                        </script> -->
+                                                                        <script>
+                                                                            CKEDITOR.replace('my-editor');
+                                                                        </script> -->
     <!-- end ck editor -->
     <!-- tiny mce editor -->
     <!-- <script src="{{ asset('assets/back/assets/tinymce/js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script> -->
