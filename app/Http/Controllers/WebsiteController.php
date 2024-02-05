@@ -84,14 +84,14 @@ class WebsiteController extends Controller
             if ($request->file('image_hero')->getClientOriginalName() != $gambar->image_hero_name) {
                 Storage::delete($gambar->image_hero);
                 $name = $request->file('image_hero')->getClientOriginalName();
-                $path = $request->file('image_hero')->store('website');
+                $path = $request->file('image_hero')->store('website', 'gcs');
             }
         }
         if ($request->hasFile('favicon')) {
             if ($request->file('favicon')->getClientOriginalName() != $gambar->favicon_name) {
                 Storage::delete($gambar->favicon);
                 $name2 = $request->file('favicon')->getClientOriginalName();
-                $path2 = $request->file('favicon')->store('website');
+                $path2 = $request->file('favicon')->store('website', 'gcs');
             }
         }
         Website::find($id)->update($request->except(['_token', 'image_hero', 'favicon']) + [

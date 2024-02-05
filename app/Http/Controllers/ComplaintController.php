@@ -108,7 +108,7 @@ class ComplaintController extends Controller
             'location' => 'required',
             'description' => 'required',
         ]);
-        $path = $request->file('photo')->store('public_complaints');
+        $path = $request->file('photo')->store('public_complaints', 'gcs');
         $id = Complaint::create(request()->except('_method', '_token', 'photo') + [
             'user_id' => auth()->user()->id,
             'attachment' => $path
@@ -184,7 +184,7 @@ class ComplaintController extends Controller
     public function finish(Request $request)
     {
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('public_complaints');
+            $path = $request->file('photo')->store('public_complaints', 'gcs');
         } else {
             $path = null;
         }

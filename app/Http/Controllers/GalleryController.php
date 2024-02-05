@@ -61,7 +61,7 @@ class GalleryController extends Controller
             'description' => 'required',
         ]);
         $name = $request->file('photo')->getClientOriginalName();
-        $path = $request->file('photo')->store('gallery');
+        $path = $request->file('photo')->store('gallery', 'gcs');
         $data = [
             'name' => $name,
             'path' => $path,
@@ -110,9 +110,9 @@ class GalleryController extends Controller
             ]);
             $gambar = Gallery::where('id', $id)->first();
             if ($request->file('photo')->getClientOriginalName() != $gambar->name) {
-                Storage::delete($gambar->path);
+                Storage::disk('gcs')->delete($gambar->path);
                 $name = $request->file('photo')->getClientOriginalName();
-                $path = $request->file('photo')->store('gallery');
+                $path = $request->file('photo')->store('gallery', 'gcs');
                 $data = [
                     'name' => $name,
                     'path' => $path,
@@ -140,8 +140,8 @@ class GalleryController extends Controller
     public function destroy($id)
     {
         $gambar = Gallery::where('id', $id)->first();
-        if (Storage::exists($gambar->path)) {
-            Storage::delete($gambar->path);
+        if (Storage::disk('gcs')->exists($gambar->path)) {
+            Storage::disk('gcs')->delete($gambar->path);
         }
         $data = Gallery::destroy($id);
         return $data;

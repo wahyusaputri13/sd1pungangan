@@ -73,7 +73,7 @@ class NewsController extends Controller
                 'description' => 'required',
             ]);
             $name = $request->file('photo')->getClientOriginalName();
-            $path = $request->file('photo')->store('news');
+            $path = $request->file('photo')->store('news', 'gcs');
             $data = [
                 'photo' => $name,
                 'path' => $path,
@@ -143,7 +143,7 @@ class NewsController extends Controller
             if ($request->file('photo')->getClientOriginalName() != $gambar->photo) {
                 Storage::delete($gambar->path);
                 $name = $request->file('photo')->getClientOriginalName();
-                $path = $request->file('photo')->store('news');
+                $path = $request->file('photo')->store('news', 'gcs');
                 $data = [
                     'photo' => $name,
                     'path' => $path,
